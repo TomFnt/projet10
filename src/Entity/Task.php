@@ -14,6 +14,9 @@ class Task
     #[ORM\Column]
     private ?int $id_task = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
@@ -102,5 +105,21 @@ class Task
         $this->employee = $employee;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 }
