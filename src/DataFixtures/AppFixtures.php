@@ -21,12 +21,13 @@ class AppFixtures extends Fixture
             $firstName = $faker->firstName();
             $surName = $faker->lastName();
             $avatar = substr($firstName, 0, 1).substr($surName, 0, 1);
+            $email = $firstName.".".$surName."@".$faker->freeEmailDomain();
 
             $employee = new Employee();
             $employee->setAvatar($avatar);
             $employee->setName($firstName);
             $employee->setSurname($surName);
-            $employee->setEmail($faker->email());
+            $employee->setEmail($email);
             $employee->setDateAdd(new \DateTime());
 
             $manager->persist($employee);
