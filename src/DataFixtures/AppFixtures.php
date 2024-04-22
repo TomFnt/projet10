@@ -28,6 +28,7 @@ class AppFixtures extends Fixture
             $employee->setName($firstName);
             $employee->setSurname($surName);
             $employee->setEmail($email);
+            $employee->setStatut($faker->randomElement(['CDI', 'CDD', 'Freelance', 'Alternant']));
             $employee->setDateAdd(new \DateTime());
 
             $manager->persist($employee);

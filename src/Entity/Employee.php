@@ -26,11 +26,15 @@ class Employee
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 10)]
+    private $statut;
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_add = null;
 
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: "employee")]
     private $tasks;
+    
 
 
     public function getIdEmployee(): ?int
@@ -103,6 +107,22 @@ class Employee
         $this->date_add = $date_add;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    /**
+     * @param mixed $statut
+     */
+    public function setStatut($statut): void
+    {
+        $this->statut = $statut;
     }
 
 
