@@ -30,13 +30,14 @@ class TaskType extends AbstractType
                 ])
             ->add('employee', EntityType::class, [
                 'class' => Employee::class,
-'choice_label' => 'name',
+                'choice_label' => function (Employee $employee) {
+                    return $employee->getFullName();
+                },
             ])
             ->add('project', EntityType::class, [
                 'class' => Project::class,
 'choice_label' => 'name',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

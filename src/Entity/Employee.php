@@ -126,4 +126,11 @@ class Employee
     }
 
 
+    public function getFullName(): ?string
+    {
+        $name =$this->getName();
+        $surname = $this->getSurname();
+
+        return $name." ".$surname;
+    }
 }
