@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une tâche{% endblock %}
-
+{% block title %}{{ parent() }}-Créer une tâche{% endblock %}
+{% set page_title = "Créer une tâche" %}
 {% block body %}
-    <h1>Créer une nouvelle tâche</h1>
-
+    <div id="content">
     {{ form_start(form) }}
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
@@ -13,6 +12,7 @@
     {{ form_row(form.employee) }}
     {{ form_row(form.project) }}
 
-    <button type="submit">Créer</button>
+    <button type="submit" class="button button-submit">Créer</button>
     {{ form_end(form) }}
+    </div>
 {% endblock %}

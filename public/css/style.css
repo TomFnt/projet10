@@ -447,6 +447,11 @@ button.button.button-submit {
     margin-top: 5px;
 }
 
+/* Effet hover */
+button.button.button-submit:hover {
+    background-color: #14453F; /* Nouvelle couleur de fond au survol */
+}
+
 form ul {
     list-style: none;
     padding: 0;

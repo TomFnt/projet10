@@ -1,16 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block titre %}{{ parent() }}-Liste des Projets{% endblock%}
+{% set page_title = task.name %}
 {% block body %}
-    {{ dump(task.employee.name) }}
-    <div id="main-container">
-        <main>
-            <header>
-                <div id="current-user"></div>
-                <div id="title-page">
-                    <h1>{{task.name}}</h1>
-                </div>
-            </header>
             <div id="content">
                 <form name="tache" method="post">
                     <div>

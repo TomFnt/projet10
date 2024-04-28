@@ -1,32 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block titre %}{{ parent() }}-Liste des Projets{% endblock%}
+{% set page_title = "Projets" %}
 {% block body %}
-    <div id="main-container">
-        <nav>
-            <a href="index.html" id="logo">
-                <img src="img/logo.png" alt="Logo TaskLinker" />
-            </a>
-            <ul id="main-menu">
-                <li class="active">
-                    <a href="index.html">
-                        <i class="fa-solid fa-list-check"></i> Projets
-                    </a>
-                </li>
-                <li>
-                    <a href="employes.html">
-                        <i class="fa-regular fa-user"></i> Équipe
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <main>
-            <header>
-                <div id="current-user"></div>
-                <div id="title-page">
-                    <h1>Projets</h1>
-                </div>
-            </header>
+
             <div id="content">
                 <div id="projects-container">
                     {% for project in projects %}
