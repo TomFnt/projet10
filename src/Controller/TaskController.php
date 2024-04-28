@@ -34,25 +34,37 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_show', ['id' => $task->getIdTask()]);
         }
 
-        return $this->render('task/task-form.html.twig', [
+        return $this->render('task/task-form-add.html.twig', [
             'form' => $form,
+            'page_title' => "Créer une tâche"
         ]);
 
     }
 
     #[Route("/task/{id}" ,name: 'task_show', requirements: ['id' => '\d+'])]
-    public function taskIndex(Task $task): Response
+    public function taskIndex(Task $task, Request $request): Response
     {
 
-        return $this->render('task/task.html.twig', [
-            'task' => $task,
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+
+        // Check if  $form are submitted & if modification are valid
+        if ($form->isSubmitted() && $form->isValid()) {
+            $task = $form->getData();
+
+            $this->entityManager->persist($task);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
+            return $this->redirectToRoute('task_show', ['id' => $task->getIdTask()]);
+        }
+
+        //simple view in case it's for show task information
+        return $this->render('task/task-form-edit.html.twig', [
+            'form' => $form->createView(),
+            'page_title' => $task->getName(),
+            'id_task' => $task->getIdTask(),
         ]);
-    }
-
-    #[Route( "/task/edit/{id}",name: 'task_edit', requirements: ['id_task' => '\d+'])]
-    public function taskEdit(): Response
-    {
-        return true;
     }
 
     #[Route(  "/task/delete/{id}", name: 'task_delete', requirements: ['id_task' => '\d+'])]
