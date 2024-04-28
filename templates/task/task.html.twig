@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}{{ parent() }}-Liste des Projets{% endblock%}
+{% block body %}
+    {{ dump(task.employee.name) }}
+    <div id="main-container">
+        <main>
+            <header>
+                <div id="current-user"></div>
+                <div id="title-page">
+                    <h1>{{task.name}}</h1>
+                </div>
+            </header>
+            <div id="content">
+                <form name="tache" method="post">
+                    <div>
+                        <label for="tache_titre" class="required">Titre de la tâche</label>
+                        <input type="text" id="tache_titre" name="{{task.name}}" required="required" value="{{task.name}}" />
+                    </div>
+                    <div>
+                        <label for="tache_description">Description</label>
+                        <textarea id="tache_description" name="{{task.description}}">{{task.description}}</textarea>
+                    </div>
+                    <div class="flex-form">
+                        <div>
+                            <label for="tache_deadline">Date</label>
+                            <input type="date" id="tache_deadline" name="{{task.deadline|date('m/d/Y')}}" value="{{task.deadline|date('m/d/Y')}}" />
+                        </div>
+                        <div>
+                            <label for="tache_statut" class="required">Statut</label>
+                            <select id="tache_statut" name="{{task.statut}}">
+                                <option value="13" selected="selected">To Do</option>
+                                <option value="14">Doing</option>
+                                <option value="15">Done</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="tache_employe">Membre</label>
+                        <select id="tache_employe" name="test">
+                            <option value=""></option>
+                            <option value="13">Natalie Dillon</option>
+                            <option value="14">Demi Baker</option>
+                        </select>
+                    </div>
+                    <br>
+                    <button class="button button-submit">Modifier</button>
+                    <a href="#" class="delete-task">Supprimer la tâche</a>
+                </form>
+            </div>
+        </main>
+    </div>
+{% endblock %}
