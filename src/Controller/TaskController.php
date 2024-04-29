@@ -28,8 +28,14 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
 
-            $this->entityManager->persist($task);
-            $this->entityManager->flush();
+            try {
+                $this->entityManager->persist($task);
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Votre nouvelle tâche a été enregistrées avec succès.');
+            }
+            catch(\Exception $message) {
+                $this->addFlash('error', "Une erreur c'est produite lors de la création de cette tâche.");
+            }
 
             return $this->redirectToRoute('task_show', ['id' => $task->getIdTask()]);
         }
@@ -50,12 +56,18 @@ class TaskController extends AbstractController
 
         // Check if  $form are submitted & if modification are valid
         if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
             $task = $form->getData();
 
             $this->entityManager->persist($task);
             $this->entityManager->flush();
-
             $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
+            }
+            catch(\Exception $message) {
+                $this->addFlash('error', "Une erreur c'est produite lors de la modification de cette tâche.");
+            }
+
             return $this->redirectToRoute('task_show', ['id' => $task->getIdTask()]);
         }
 

@@ -17,6 +17,13 @@
 </head>
 <body>
 {% include "_nav.html.twig" with {'page_title': page_title} %}
+{% for label, messages in app.flashes %}
+{% for message in messages %}
+    <div class="flash-{{ label }}">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endfor %}
     {% block body %}{% endblock %}
 </body>
 </html>
