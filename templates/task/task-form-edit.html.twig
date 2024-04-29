@@ -13,6 +13,7 @@
         {{ form_row(form.project) }}
 
         <button type="submit" class="button button-submit">Modifier</button>
+        <a href="{{ path('task_delete', {'id': id_task}) }}" class="delete-task">Supprimer la tâche</a>
         {{ form_end(form) }}
     </div>
 {% endblock %}

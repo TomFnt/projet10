@@ -80,8 +80,21 @@ class TaskController extends AbstractController
     }
 
     #[Route(  "/task/delete/{id}", name: 'task_delete', requirements: ['id_task' => '\d+'])]
-    public function delete(): Response
+    public function delete(Task $task): Response
     {
-        return true;
+        $id = $task->getIdTask();
+
+        $this->entityManager->remove($task);
+
+        try {
+            $this->entityManager->flush();
+
+            $this->addFlash('success', "Supression de la tâche n°$id réussi. ");
+        }catch (Exception $message )
+        {
+            $this->addFlash('error', "Une erreur c'est produite lors de la suppression de la tâche n° $id.");
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }
