@@ -47,7 +47,7 @@ class TaskController extends AbstractController
 
     }
 
-    #[Route("/task/{id}" ,name: 'task_show', requirements: ['id' => '\d+'])]
+    #[Route("/task/{id}" ,name: 'task_index', requirements: ['id' => '\d+'])]
     public function taskIndex(Task $task, Request $request): Response
     {
 
