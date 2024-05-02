@@ -12,8 +12,9 @@ class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id_project = null;
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -21,22 +22,28 @@ class Project
     #[ORM\Column]
     private ?bool $is_archived = null;
 
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: "project")]
+    #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'projects')]
+    private Collection $employees;
+
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $tasks;
 
-
-
-    public function getIdProject(): ?int
+    public function __construct()
     {
-        return $this->id_project;
+        $this->employees = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
-    public function setIdProject(int $id_project): static
+    public function getId(): ?int
     {
-        $this->id_project = $id_project;
-
-        return $this;
+        return $this->id;
     }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
 
     public function getName(): ?string
     {
@@ -62,20 +69,59 @@ class Project
         return $this;
     }
 
+
     /**
-     * @return Collection|Task[]
+     * @return Collection<int, Employee>
+     */
+    public function getEmployees(): Collection
+    {
+        return $this->employees;
+    }
+
+    public function addEmployee(Employee $employee): static
+    {
+        if (!$this->employees->contains($employee)) {
+            $this->employees->add($employee);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployee(Employee $employee): static
+    {
+        $this->employees->removeElement($employee);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
      */
     public function getTasks(): Collection
     {
         return $this->tasks;
     }
 
-    /**
-     * @param Collection $tasks
-     */
-    public function setTasks(Collection $tasks): void
+    public function addTask(Task $task): static
     {
-        $this->tasks = $tasks;
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
+            }
+        }
+
+        return $this;
     }
 
 }

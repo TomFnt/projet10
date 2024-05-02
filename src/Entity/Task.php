@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +13,8 @@ class Task
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id_task = null;
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -26,25 +28,26 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\ManyToOne(targetEntity: Employee::class, inversedBy: "tasks")]
-    #[ORM\JoinColumn(name: "employee", referencedColumnName: "id_employee", nullable: false)]
-    private $employee;
+    #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'tasks')]
+    private Collection $employees;
 
-    #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: "tasks")]
-    #[ORM\JoinColumn(name: "project", referencedColumnName: "id_project", nullable: false)]
-    private $project;
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Project $project = null;
 
-
-    public function getIdTask(): ?int
+    public function __construct()
     {
-        return $this->id_task;
+        $this->employees = new ArrayCollection();
     }
 
-    public function setIdTask(int $id_task): static
+    public function getId(): ?int
     {
-        $this->id_task = $id_task;
+        return $this->id;
+    }
 
-        return $this;
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getDescription(): ?string
@@ -83,30 +86,6 @@ class Task
         return $this;
     }
 
-    public function getProject(): ?Project
-    {
-        return $this->project;
-    }
-
-    public function setProject(?Project $project): self
-    {
-        $this->project = $project;
-
-        return $this;
-    }
-
-    public function getEmployee(): ?Employee
-    {
-        return $this->employee;
-    }
-
-    public function setEmployee(?Employee $employee): self
-    {
-        $this->employee = $employee;
-
-        return $this;
-    }
-
     /**
      * @return string|null
      */
@@ -121,5 +100,41 @@ class Task
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return Collection<int, Employee>
+     */
+    public function getEmployees(): Collection
+    {
+        return $this->employees;
+    }
+
+    public function addEmployee(Employee $employee): static
+    {
+        if (!$this->employees->contains($employee)) {
+            $this->employees->add($employee);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployee(Employee $employee): static
+    {
+        $this->employees->removeElement($employee);
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): static
+    {
+        $this->project = $project;
+
+        return $this;
     }
 }

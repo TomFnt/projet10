@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +13,8 @@ class Employee
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id_employee = null;
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     #[ORM\Column(length: 2)]
     private ?string $avatar = null;
@@ -32,21 +34,27 @@ class Employee
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_add = null;
 
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: "employee")]
-    private $tasks;
-    
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'employees')]
+    private Collection $projects;
 
+    #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: 'employees')]
+    private Collection $tasks;
 
-    public function getIdEmployee(): ?int
+    public function __construct()
     {
-        return $this->id_employee;
+        $this->projects = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
-    public function setIdEmployee(int $id_employee): static
-    {
-        $this->id_employee = $id_employee;
 
-        return $this;
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getAvatar(): ?string
@@ -132,5 +140,59 @@ class Employee
         $surname = $this->getSurname();
 
         return $name." ".$surname;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): static
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->addEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): static
+    {
+        if ($this->projects->removeElement($project)) {
+            $project->removeEmployee($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): static
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->addEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): static
+    {
+        if ($this->tasks->removeElement($task)) {
+            $task->removeEmployee($this);
+        }
+
+        return $this;
     }
 }

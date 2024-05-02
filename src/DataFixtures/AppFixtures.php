@@ -29,10 +29,10 @@ class AppFixtures extends Fixture
             $employee->setSurname($surName);
             $employee->setEmail($email);
             $employee->setStatut($faker->randomElement(['CDI', 'CDD', 'Freelance', 'Alternant']));
-            $employee->setDateAdd(new \DateTime());
+            $employee->setDateAdd($faker->dateTimeBetween('-8 year', 'now'));
 
+            $employees[]= $employee;
             $manager->persist($employee);
-            $this->addReference('employee_'.$i, $employee); // add reference for l52
         }
 
         // Create 3 random Project
@@ -41,26 +41,28 @@ class AppFixtures extends Fixture
             $project->setName($faker->sentence(4)); // generate a phrase with 3 random words
             $project->setIsArchived($faker->boolean());
 
+            $projects[]= $project;
             $manager->persist($project);
-            $this->addReference('project_'.$i, $project, ); // add reference for l53
+
         }
 
-        // Create 4 random Task
-        for ($i = 1; $i <= 4; $i++) {
+        // Get all employees and projects for in order to associate an random employee and project foreach task
+
+        // Create 8 random Task
+        for ($i = 1; $i <= 8; $i++) {
             $task = new Task();
             $task->setName($faker->sentence(4));
-
-            //attribute randomly an existent employee & project for this task
-            $employeeRef = $this->getReference('employee_'.rand(1, 5));
-            $projectRef = $this->getReference('project_'.rand(1, 3));
-            $task->setEmployee($employeeRef);
-            $task->setProject($projectRef);
-
             $task->setDescription($faker->sentence());
             $task->setDeadline($faker->dateTimeBetween('now', '+3 years'));
             $task->setStatut($faker->randomElement(['To Do', 'In Progress', 'Done']));
 
             $manager->persist($task);
+
+            $employee = $faker->randomElement($employees);
+            $employee->addTask($task);
+
+            $project = $faker->randomElement($projects);
+            $project->addTask($task);
         }
 
         $manager->flush();
