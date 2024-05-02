@@ -22,21 +22,6 @@ class TaskRepository extends ServiceEntityRepository
     }
 
 
-    /**
-     * Get all Taks for a specific Project
-     * @param $value, correspond to id_project
-     * @return array
-     */
-    public function findTasksByProject(int $value): array
-        {
-            return $this->createQueryBuilder('t')
-                ->andWhere('t.project = :val')
-                ->setParameter('val', $value)
-                ->orderBy('t.id_task', 'ASC')
-                ->getQuery()
-                ->getResult();
-        }
-
     //    public function findOneBySomeField($value): ?Task
     //    {
     //        return $this->createQueryBuilder('t')

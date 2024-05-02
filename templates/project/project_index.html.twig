@@ -1,2 +1,66 @@
-{{ dump(project) }}
-{{ dump(tasks) }}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}-{{ page_title }}{% endblock %}
+{% block body %}
+    <div id="content">
+        <div id="tasks-container">
+            <div class="task-column">
+                <h2>To Do</h2>
+                <div class="tasks-list">
+                    {% if todo_list is not empty %}
+                    {% for task in todo_list %}
+                    <a class="task" href="{{ path('task_index', {'id': task.idTask}) }}">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.description }}</p>
+                        <div class="task-infos">
+                            <div class="task-deadline">
+                                <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                    <a href="{{ path('task_add') }}" class="task-add">+ Ajouter une tâche</a>
+                </div>
+            </div>
+            <div class="task-column">
+                <h2>Doing</h2>
+                <div class="tasks-list">
+                    {% if doing_list is not empty%}
+                    {% for task in doing_list %}
+                    <a class="task" href="{{ path('task_index', {'id': task.idTask}) }}">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.description }}</p>
+                        <div class="task-infos">
+                            <div class="task-deadline">
+                                <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                    <a href="{{ path('task_add') }}" class="task-add">+ Ajouter une tâche</a>
+                </div>
+            </div>
+            <div class="task-column">
+                <h2>Done</h2>
+                {% if done_list is not empty %}
+                {% for task in done_list %}
+                <div class="tasks-list">t
+                    <a class="task" href="{{ path('task_index', {'id': task.id_task}) }}">
+                        <h3>{{ task.name }}</h3>
+                        <p>{{ task.description }}</p>
+                        <div class="task-infos">
+                            <div class="task-deadline">
+                                <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
+                    <a href="{{ path('task_add') }}" class="task-add">+ Ajouter une tâche</a>
+                </div>
+            </div>
+    </div>
+    </div>
+{% endblock %}

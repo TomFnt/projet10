@@ -37,7 +37,7 @@ class TaskController extends AbstractController
                 $this->addFlash('error', "Une erreur c'est produite lors de la création de cette tâche.");
             }
 
-            return $this->redirectToRoute('task_show', ['id' => $task->getIdTask()]);
+            return $this->redirectToRoute('task_index', ['id' => $task->getIdTask()]);
         }
 
         return $this->render('task/task-form-add.html.twig', [
@@ -60,6 +60,8 @@ class TaskController extends AbstractController
             try{
             $task = $form->getData();
 
+
+
             $this->entityManager->persist($task);
             $this->entityManager->flush();
             $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
@@ -68,7 +70,7 @@ class TaskController extends AbstractController
                 $this->addFlash('error', "Une erreur c'est produite lors de la modification de cette tâche.");
             }
 
-            return $this->redirectToRoute('task_show', ['id' => $task->getIdTask()]);
+            return $this->redirectToRoute('task_index', ['id' => $task->getIdTask()]);
         }
 
         //simple view in case it's for show task information
