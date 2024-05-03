@@ -8,11 +8,11 @@
                 <div id="projects-container">
                     {% for project in projects %}
                         <article class="card-project">
-                            <a href="{{ path('project_index', { 'id': project.idProject }) }}">
+                            <a href="{{ path('project_index', { 'id': project.id }) }}">
                                 <h2>{{ project.name }}</h2>
                             </a>
                             <div class="card-project-icons">
-                                <a href="{{ path('project_edit', { 'id': project.idProject }) }}"><i class="fa-solid fa-pen"></i></a>
+                                <a href="{{ path('project_edit', { 'id': project.id }) }}"><i class="fa-solid fa-pen"></i></a>
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </article>

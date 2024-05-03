@@ -29,7 +29,7 @@ class Employee
     private ?string $email = null;
 
     #[ORM\Column(length: 10)]
-    private $statut;
+    private $status;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_add = null;
@@ -120,17 +120,17 @@ class Employee
     /**
      * @return mixed
      */
-    public function getStatut()
+    public function getStatus()
     {
-        return $this->statut;
+        return $this->status;
     }
 
     /**
-     * @param mixed $statut
+     * @param mixed $status
      */
-    public function setStatut($statut): void
+    public function setStatus($status): void
     {
-        $this->statut = $statut;
+        $this->status = $status;
     }
 
 

@@ -27,17 +27,17 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
-
             try {
                 $this->entityManager->persist($task);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Votre nouvelle tâche a été enregistrées avec succès.');
             }
             catch(\Exception $message) {
-                $this->addFlash('error', "Une erreur c'est produite lors de la création de cette tâche.");
+                $this->addFlash('error', "Une erreur c'est produite lors de la création de cette tâche. " . $message);
+                return $this->redirectToRoute('task_add');
             }
 
-            return $this->redirectToRoute('task_index', ['id' => $task->getIdTask()]);
+            return $this->redirectToRoute('task_index', ['id' => $task->getId()]);
         }
 
         return $this->render('task/task-form-add.html.twig', [
@@ -70,21 +70,21 @@ class TaskController extends AbstractController
                 $this->addFlash('error', "Une erreur c'est produite lors de la modification de cette tâche.");
             }
 
-            return $this->redirectToRoute('task_index', ['id' => $task->getIdTask()]);
+            return $this->redirectToRoute('task_index', ['id' => $task->getId()]);
         }
 
         //simple view in case it's for show task information
         return $this->render('task/task-form-edit.html.twig', [
             'form' => $form->createView(),
             'page_title' => $task->getName(),
-            'id_task' => $task->getIdTask(),
+            'id_task' => $task->getId(),
         ]);
     }
 
     #[Route(  "/task/delete/{id}", name: 'task_delete', requirements: ['id_task' => '\d+'])]
     public function delete(Task $task): Response
     {
-        $id = $task->getIdTask();
+        $task->getId();
 
         $this->entityManager->remove($task);
 
@@ -92,7 +92,8 @@ class TaskController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', "Supression de la tâche n°$id réussi. ");
-        }catch (Exception $message )
+        }
+        catch (Exception $message )
         {
             $this->addFlash('error', "Une erreur c'est produite lors de la suppression de la tâche n° $id.");
         }

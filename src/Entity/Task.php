@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
+    public static $statusList = ['To do', 'Doing', 'Done'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -26,7 +28,7 @@ class Task
     private ?\DateTimeInterface $deadline = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $statut = null;
+    private ?string $status = null;
 
     #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'tasks')]
     private Collection $employees;
@@ -74,14 +76,14 @@ class Task
         return $this;
     }
 
-    public function getStatut(): ?string
+    public function getStatus(): ?string
     {
-        return $this->statut;
+        return $this->status;
     }
 
-    public function setStatut(string $statut): static
+    public function setStatus(string $status): static
     {
-        $this->statut = $statut;
+        $this->status = $status;
 
         return $this;
     }

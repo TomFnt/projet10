@@ -21,23 +21,24 @@ class TaskType extends AbstractType
             ->add('deadline', null, [
                 'widget' => 'single_text',
             ])
-            ->add('statut', ChoiceType::class, [
-                'choices' => [
-                    'To do' => 'To do',
-                    'Doing' => 'Doing',
-                    'Done' => 'Done',
-                ],
-                ])
-            ->add('employee', EntityType::class, [
+            ->add('status', ChoiceType::class, [
+                'choices' => array_combine(Task::$statusList, Task::$statusList),
+            ])
+
+            ->add('employees', EntityType::class, [
                 'class' => Employee::class,
-                'choice_label' => function (Employee $employee) {
-                    return $employee->getFullName();
-                },
+'choice_label' => function (Employee $employee) {
+    return $employee->getFullName();
+},
+'multiple' => true,
             ])
             ->add('project', EntityType::class, [
                 'class' => Project::class,
-'choice_label' => 'name',
-            ]);
+'choice_label' => function (Project $project) {
+                return $project->getName();
+},
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

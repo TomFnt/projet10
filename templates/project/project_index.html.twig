@@ -9,7 +9,7 @@
                 <div class="tasks-list">
                     {% if todo_list is not empty %}
                     {% for task in todo_list %}
-                    <a class="task" href="{{ path('task_index', {'id': task.idTask}) }}">
+                    <a class="task" href="{{ path('task_index', {'id': task.id}) }}">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.description }}</p>
                         <div class="task-infos">
@@ -28,7 +28,7 @@
                 <div class="tasks-list">
                     {% if doing_list is not empty%}
                     {% for task in doing_list %}
-                    <a class="task" href="{{ path('task_index', {'id': task.idTask}) }}">
+                    <a class="task" href="{{ path('task_index', {'id': task.id}) }}">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.description }}</p>
                         <div class="task-infos">
@@ -47,7 +47,7 @@
                 {% if done_list is not empty %}
                 {% for task in done_list %}
                 <div class="tasks-list">t
-                    <a class="task" href="{{ path('task_index', {'id': task.id_task}) }}">
+                    <a class="task" href="{{ path('task_index', {'id': task.id}) }}">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.description }}</p>
                         <div class="task-infos">

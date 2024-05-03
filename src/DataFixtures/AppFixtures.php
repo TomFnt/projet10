@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
             $employee->setName($firstName);
             $employee->setSurname($surName);
             $employee->setEmail($email);
-            $employee->setStatut($faker->randomElement(['CDI', 'CDD', 'Freelance', 'Alternant']));
+            $employee->setStatus($faker->randomElement(['CDI', 'CDD', 'Freelance', 'Alternant']));
             $employee->setDateAdd($faker->dateTimeBetween('-8 year', 'now'));
 
             $employees[]= $employee;
@@ -54,7 +54,7 @@ class AppFixtures extends Fixture
             $task->setName($faker->sentence(4));
             $task->setDescription($faker->sentence());
             $task->setDeadline($faker->dateTimeBetween('now', '+3 years'));
-            $task->setStatut($faker->randomElement(['To Do', 'In Progress', 'Done']));
+            $task->setStatus($faker->randomElement(['To Do', 'In Progress', 'Done']));
 
             $manager->persist($task);
 
