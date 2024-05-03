@@ -21,7 +21,6 @@ class ProjectController extends AbstractController
     public function projectAdd(Request $request): Response
     {
         $project = new Project();
-
         $form = $this->createForm(ProjectType::class, $project);
 
         $form->handleRequest($request);
@@ -92,5 +91,24 @@ class ProjectController extends AbstractController
             'page_title' => 'Modifier le Projet : '.$project->getName(),
             'btn_label' => 'Modifier',
         ]);
+    }
+    #[Route(  "/project/delete/{id}", name: 'project_delete', requirements: ['id' => '\d+'])]
+    public function projectDelete(Project $project): Response
+    {
+        $id = $project->getId();
+
+        $this->entityManager->remove($project);
+
+        try {
+            $this->entityManager->flush();
+
+            $this->addFlash('success', "Supression du projet n°$id réussi. ");
+        }
+        catch (Exception $message )
+        {
+            $this->addFlash('error', "Une erreur c'est produite lors de la suppression du projet n° $id.");
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }
