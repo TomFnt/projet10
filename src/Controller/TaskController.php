@@ -84,7 +84,7 @@ class TaskController extends AbstractController
     #[Route(  "/task/delete/{id}", name: 'task_delete', requirements: ['id_task' => '\d+'])]
     public function delete(Task $task): Response
     {
-        $task->getId();
+        $id = $task->getId();
 
         $this->entityManager->remove($task);
 
