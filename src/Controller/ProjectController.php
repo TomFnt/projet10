@@ -63,9 +63,34 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/project/edit/{id}', name: 'project_edit')]
-    public function projectEdit(): Response
+    #[Route('/project/edit/{id}', name: 'project_edit', requirements: ['id' => '\d+'])]
+    public function projectEdit(Project $project, Request $request): Response
     {
-        return true;
+
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
+
+        // Check if  $form are submitted & if modification are valid
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+                $project = $form->getData();
+
+                $this->entityManager->persist($project);
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
+            }
+            catch(\Exception $message) {
+                $this->addFlash('error', "Une erreur c'est produite lors de la modification de ce projet.");
+            }
+
+            return $this->redirectToRoute('project_index', ['id' => $project->getId()]);
+        }
+
+        return $this->render('project/project-form.html.twig', [
+            'form' => $form->createView(),
+            'page_title' => 'Modifier le Projet : '.$project->getName(),
+            'btn_label' => 'Modifier',
+        ]);
     }
 }
