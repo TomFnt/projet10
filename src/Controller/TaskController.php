@@ -60,8 +60,6 @@ class TaskController extends AbstractController
             try{
             $task = $form->getData();
 
-
-
             $this->entityManager->persist($task);
             $this->entityManager->flush();
             $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
