@@ -20,9 +20,9 @@ class ProjectController extends AbstractController
     public function projectIndex(Project $project, TaskRepository $taskRepository): Response
     {
 
-        $toDoList = $taskRepository->findBy(['project' => $project, 'statut' =>'To Do'], ['deadline'=>'ASC']);
-        $DoingList = $taskRepository->findBy(['project' => $project, 'statut' =>'Doing'], ['deadline'=>'ASC']);
-        $doneList = $taskRepository->findBy(['project' => $project, 'statut' =>'Done'], ['deadline'=>'ASC']);
+        $toDoList = $taskRepository->findBy(['project' => $project, 'status' =>'To Do'], ['deadline'=>'ASC']);
+        $DoingList = $taskRepository->findBy(['project' => $project, 'status' =>'Doing'], ['deadline'=>'ASC']);
+        $doneList = $taskRepository->findBy(['project' => $project, 'status' =>'Done'], ['deadline'=>'ASC']);
 
 
         return $this->render('project/project_index.html.twig', [
