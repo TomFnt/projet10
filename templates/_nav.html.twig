@@ -4,13 +4,13 @@
             <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker">
         </a>
         <ul id="main-menu">
-            <li class="{{ app.request.attributes.get('_route') == 'homepage' ? 'active' : '' }}">
+            <li class="{{ app.request.attributes.get('_route') == 'app_home' ? 'active' : '' }}">
                 <a href="{{ path('app_home') }}">
                     <i class="fa-solid fa-list-check"></i> Projets
                 </a>
             </li>
-            <li class="{{ app.request.attributes.get('_route') == 'employees_list' ? 'active' : '' }}">
-                <a href="{{ path('app_home') }}">
+            <li class="{{ app.request.attributes.get('_route') == 'employees_index' ? 'active' : '' }}">
+                <a href="{{ path('employees_index') }}">
                     <i class="fa-regular fa-user"></i> Équipe
                 </a>
             </li>
