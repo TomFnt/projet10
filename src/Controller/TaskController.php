@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
 use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,12 +18,15 @@ class TaskController extends AbstractController
 
     }
 
-    #[Route("/task/add" ,name: 'task_add')]
-    public function taskAdd(Request $request): Response
+    #[Route("project/{id}/task/add" ,name: 'task_add', requirements: ['id' => '\d+'])]
+    public function taskAdd( Project $project, Request $request): Response
     {
         $task = new Task();
+        $project->addTask($task);
 
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskType::class, $task, [
+            'project_id' => $project->getId(),
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

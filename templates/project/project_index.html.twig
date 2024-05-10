@@ -1,5 +1,20 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ parent() }}-{{ page_title }}{% endblock %}
+
+{% block nav %}
+    <div class="flex-header">
+{{ parent() }}
+        {% if project.employees is not empty %}
+            <div class="user-list">
+                {% for employee in project.employees %}
+                    <div class="avatar">{{ employee.avatar }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <a class="button" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
+    </div>
+{% endblock %}
+
 {% block body %}
     <div id="content">
         <div id="tasks-container">
@@ -19,7 +34,7 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add') }}" class="task-add">+ Ajouter une tâche</a>
+                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
                 </div>
             </div>
             <div class="task-column">
@@ -38,14 +53,14 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add') }}" class="task-add">+ Ajouter une tâche</a>
+                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
                 </div>
             </div>
             <div class="task-column">
                 <h2>Done</h2>
                 {% if done_list is not empty %}
                 {% for task in done_list %}
-                <div class="tasks-list">t
+                <div class="tasks-list">
                     <a class="task" href="{{ path('task_index', {'id': task.id}) }}">
                         <h3>{{ task.name }}</h3>
                         <p>{{ task.description }}</p>
@@ -57,7 +72,7 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add') }}" class="task-add">+ Ajouter une tâche</a>
+                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
                 </div>
             </div>
     </div>

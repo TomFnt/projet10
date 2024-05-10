@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
+use App\Repository\EmployeeRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,11 +48,13 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}', name: 'project_index', requirements: ['id' => '\d+'])]
-    public function projectIndex(Project $project, TaskRepository $taskRepository): Response
+    public function projectIndex(Project $project, TaskRepository $taskRepository, EmployeeRepository $employeeRepository): Response
     {
         $toDoList = $taskRepository->findBy(['project' => $project, 'status' => 'To Do'], ['deadline' => 'ASC']);
         $DoingList = $taskRepository->findBy(['project' => $project, 'status' => 'Doing'], ['deadline' => 'ASC']);
         $doneList = $taskRepository->findBy(['project' => $project, 'status' => 'Done'], ['deadline' => 'ASC']);
+
+
 
         return $this->render('project/project_index.html.twig', [
             'project' => $project,
@@ -59,6 +62,7 @@ class ProjectController extends AbstractController
             'todo_list' => $toDoList,
             'doing_list' => $DoingList,
             'done_list' => $doneList,
+
         ]);
     }
 
