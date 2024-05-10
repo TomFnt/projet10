@@ -47,7 +47,6 @@ class Employee
         $this->tasks = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -65,7 +64,7 @@ class Employee
 
     public function setAvatar(string $firstName, string $surName): static
     {
-        $this->avatar =  substr($firstName, 0, 1).substr($surName, 0, 1);
+        $this->avatar = substr($firstName, 0, 1).substr($surName, 0, 1);
 
         return $this;
     }
@@ -118,29 +117,22 @@ class Employee
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getStatus()
     {
         return $this->status;
     }
 
-    /**
-     * @param mixed $status
-     */
     public function setStatus($status): void
     {
         $this->status = $status;
     }
 
-
     public function getFullName(): ?string
     {
-        $name =$this->getName();
+        $name = $this->getName();
         $surname = $this->getSurname();
 
-        return $name." ".$surname;
+        return $name.' '.$surname;
     }
 
     /**
