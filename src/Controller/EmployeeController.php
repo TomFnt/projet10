@@ -57,11 +57,23 @@ class EmployeeController extends AbstractController
         ]);
     }
     #[Route('/employee/delete/{id}', name: 'employee_delete', requirements: ['id' => '\d+'])]
-    public function employeeDelete(): Response
+    public function employeeDelete(Employee $employee): Response
     {
-        return $this->render('employee/index.html.twig', [
-            'page_title' => 'Équipe',
-        ]);
+        $id = $employee->getId();
+
+        $this->entityManager->remove($employee);
+
+        try {
+            $this->entityManager->flush();
+
+            $this->addFlash('success', "Supression de l'employé n°$id réussi. ");
+        }
+        catch (Exception $message )
+        {
+            $this->addFlash('error', "Une erreur c'est produite lors de la suppression de l'employé n° $id.");
+        }
+
+        return $this->redirectToRoute('employees_index');
     }
 
 
