@@ -26,6 +26,7 @@ class ProjectType extends AbstractType
                     return $employee->getFullName();
                 },
                 'multiple' => true,
+                'required' => false,
             ])
         ;
     }

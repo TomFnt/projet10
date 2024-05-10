@@ -31,6 +31,7 @@ class TaskType extends AbstractType
     return $employee->getFullName();
 },
 'multiple' => true,
+                'required' => false,
             ])
             ->add('project', EntityType::class, [
                 'class' => Project::class,
