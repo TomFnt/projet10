@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 class Employee
 {
+    public static $statutEmployeeList = ['CDI', 'CDD', 'Freelance', 'Alternant'];
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -62,9 +63,9 @@ class Employee
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): static
+    public function setAvatar(string $firstName, string $surName): static
     {
-        $this->avatar = $avatar;
+        $this->avatar =  substr($firstName, 0, 1).substr($surName, 0, 1);
 
         return $this;
     }

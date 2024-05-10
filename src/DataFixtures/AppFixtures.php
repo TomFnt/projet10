@@ -20,11 +20,10 @@ class AppFixtures extends Fixture
 
             $firstName = $faker->firstName();
             $surName = $faker->lastName();
-            $avatar = substr($firstName, 0, 1).substr($surName, 0, 1);
             $email = $firstName.".".$surName."@".$faker->freeEmailDomain();
 
             $employee = new Employee();
-            $employee->setAvatar($avatar);
+            $employee->setAvatar($firstName, $surName);
             $employee->setName($firstName);
             $employee->setSurname($surName);
             $employee->setEmail($email);

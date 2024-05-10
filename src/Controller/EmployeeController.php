@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Employee;
+use App\Form\EmployeeType;
 use App\Repository\EmployeeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class EmployeeController extends AbstractController
 {
-    #[Route('/employees', name: 'employee_index')]
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
+    }
+
+    #[Route('/employees', name: 'employees_index')]
     public function index(EmployeeRepository $employeeRepository): Response
     {
         $employees = $employeeRepository->findAll();
@@ -21,11 +28,32 @@ class EmployeeController extends AbstractController
         ]);
     }
     #[Route('/employee/edit/{id}', name: 'employee_edit', requirements: ['id' => '\d+'])]
-    public function employeeEdit(): Response
+    public function employeeEdit(Employee $employee, Request $request): Response
     {
+        $form = $this->createForm(EmployeeType::class, $employee);
+        $form->handleRequest($request);
 
-        return $this->render('employee/index.html.twig', [
-            'page_title' => 'Équipe',
+        // Check if  $form are submitted & if modification are valid
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+                $employee = $form->getData();
+
+                $employee->setAvatar($employee->getName(), $employee->getSurname());
+                $this->entityManager->persist($employee);
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
+            }
+            catch(\Exception $message) {
+                $this->addFlash('error', "Une erreur c'est produite lors de la modification de ce projet.".$message);
+            }
+
+            return $this->redirectToRoute('employees_index');
+        }
+        return $this->render('employee/employee-form.html.twig', [
+            'form' => $form->createView(),
+            'page_title' => 'Modifier le Projet : '.$employee->getFullName(),
+            'btn_label' => 'Modifier',
         ]);
     }
     #[Route('/employee/delete/{id}', name: 'employee_delete', requirements: ['id' => '\d+'])]
