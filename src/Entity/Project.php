@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ProjectRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -14,7 +14,6 @@ class Project
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
-
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -44,7 +43,6 @@ class Project
         $this->id = $id;
     }
 
-
     public function getName(): ?string
     {
         return $this->name;
@@ -68,7 +66,6 @@ class Project
 
         return $this;
     }
-
 
     /**
      * @return Collection<int, Employee>
@@ -123,5 +120,4 @@ class Project
 
         return $this;
     }
-
 }

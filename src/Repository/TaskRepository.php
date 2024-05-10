@@ -21,7 +21,6 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-
     //    public function findOneBySomeField($value): ?Task
     //    {
     //        return $this->createQueryBuilder('t')
