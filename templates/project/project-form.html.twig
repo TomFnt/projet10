@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}-{{page_title}}{% endblock %}
+
+{% block body %}
+    <div id="content">
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.is_archived) }}
+    {{ form_row(form.employees) }}
+
+    <button type="submit" class="button button-submit">{{ btn_label }}</button>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}
