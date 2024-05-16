@@ -7,32 +7,47 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 class Employee
 {
-    public static $statutEmployeeList = ['CDI', 'CDD', 'Freelance', 'Alternant'];
+    public const statutEmployeeList = ['CDI', 'CDD', 'Freelance', 'Alternant'];
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(length: 2)]
+    #[Assert\Length(min: 2, max: 2)]
     private ?string $avatar = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le prénom ne peut pas dépasser {{ limit }} caractères"
+    )]
     private ?string $surname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(message: "{{ value }} n'est pas une adresse email valide",)]
     private ?string $email = null;
 
+
     #[ORM\Column(length: 10)]
+    #[Assert\Choice(choices: Employee::statutEmployeeList)]
     private $status;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\DateTime]
     private ?\DateTimeInterface $date_add = null;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'employees')]
@@ -64,7 +79,7 @@ class Employee
 
     public function setAvatar(string $firstName, string $surName): static
     {
-        $this->avatar = substr($firstName, 0, 1).substr($surName, 0, 1);
+        $this->avatar = substr($firstName, 0, 1) . substr($surName, 0, 1);
 
         return $this;
     }
@@ -132,7 +147,7 @@ class Employee
         $name = $this->getName();
         $surname = $this->getSurname();
 
-        return $name.' '.$surname;
+        return $name . ' ' . $surname;
     }
 
     /**
