@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,11 +20,11 @@ class TaskType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('deadline', null, [
+            ->add('deadline', DateType::class, [
                 'widget' => 'single_text',
             ])
             ->add('status', ChoiceType::class, [
-                'choices' => array_combine(Task::$statusList, Task::$statusList),
+                'choices' => array_combine(Task::statusList, Task::statusList),
             ])
 
             ->add('employees', EntityType::class, [

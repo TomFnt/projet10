@@ -52,7 +52,9 @@ class TaskController extends AbstractController
     #[Route('/task/{id}', name: 'task_index', requirements: ['id' => '\d+'])]
     public function taskIndex(Task $task, Request $request): Response
     {
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskType::class, $task,  [
+            'project_id' => $task->getProject()->getId(),
+        ]);
         $form->handleRequest($request);
 
         // Check if  $form are submitted & if modification are valid

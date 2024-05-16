@@ -16,9 +16,14 @@ class Project
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom du projet ne peut pas dépasser {{ limit }} caractères"
+    )]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\Type(type: 'bool')]
     private ?bool $is_archived = null;
 
     #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'projects')]
