@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
+.form-row {
+    display: flex;
+    align-items: center;
+}
+
+.form-row input[type="checkbox"] {
+    width: 20%;
+    height: 40px;
+}
+
 /* custom CSS for success message return by the Controller */
 .flash-success {
     background-color: #dff0d8;

@@ -7,8 +7,12 @@
 
     {{ form_start(form) }}
     {{ form_row(form.name) }}
-    {{ form_row(form.is_archived) }}
+        <div class="form-row">
+            {{ form_label(form.is_archived) }}
+            {{ form_widget(form.is_archived) }}
+        </div>
     {{ form_row(form.employees) }}
+        {{ form_rest(form) }}
 
     <button type="submit" class="button button-submit">{{ btn_label }}</button>
     {{ form_end(form) }}
