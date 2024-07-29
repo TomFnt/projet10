@@ -8,9 +8,14 @@ use App\Entity\Task;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
@@ -21,11 +26,15 @@ class AppFixtures extends Fixture
             $surName = $faker->lastName();
             $email = $firstName.'.'.$surName.'@'.$faker->freeEmailDomain();
 
+            $plainPassword = $faker->password();
+
             $employee = new Employee();
             $employee->setAvatar($firstName, $surName);
             $employee->setName($firstName);
             $employee->setSurname($surName);
             $employee->setEmail($email);
+            $hashedPassword = $this->passwordHasher->hashPassword($employee, $plainPassword);
+            $employee->setPassword($hashedPassword);
             $employee->setStatus($faker->randomElement(['CDI', 'CDD', 'Freelance', 'Alternant']));
             $employee->setDateAdd($faker->dateTimeBetween('-8 year', 'now'));
 
