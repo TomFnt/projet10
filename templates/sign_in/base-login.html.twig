@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block titre %}{{ parent() }}-Template Inscription Connexion{% endblock%}
+{% block title %}{{ parent() }}-{{page_title}}{% endblock %}
+
 {% block body %}
-    <h1>Test de la route sign/in du Controller SignInController</h1>
+    <div id="content">
+
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+
+        <button type="submit" class="button button-submit">{{ btn_label }}</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
