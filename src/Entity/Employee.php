@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
-class Employee
+class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const statutEmployeeList = ['CDI', 'CDD', 'Freelance', 'Alternant'];
     #[ORM\Id]
@@ -25,7 +27,7 @@ class Employee
     #[ORM\Column(length: 255)]
     #[Assert\Length(
         max: 255,
-        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères'
     )]
     private ?string $name = null;
 
@@ -33,14 +35,21 @@ class Employee
     #[Assert\NotBlank]
     #[Assert\Length(
         max: 255,
-        maxMessage: "Le prénom ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: 'Le prénom ne peut pas dépasser {{ limit }} caractères'
     )]
     private ?string $surname = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Email(message: "{{ value }} n'est pas une adresse email valide",)]
+    #[Assert\Email(message: "{{ value }} n'est pas une adresse email valide", )]
     private ?string $email = null;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le mot de passe ne doit pas être vide.')]
+    #[Assert\Length(
+        min: 8,
+        minMessage: 'Le mot de passe doit comporter au moins {{ limit }} caractères.',
+    )]
+    private $password;
 
     #[ORM\Column(length: 10)]
     #[Assert\Choice(choices: Employee::statutEmployeeList)]
@@ -79,7 +88,7 @@ class Employee
 
     public function setAvatar(string $firstName, string $surName): static
     {
-        $this->avatar = substr($firstName, 0, 1) . substr($surName, 0, 1);
+        $this->avatar = substr($firstName, 0, 1).substr($surName, 0, 1);
 
         return $this;
     }
@@ -147,7 +156,7 @@ class Employee
         $name = $this->getName();
         $surname = $this->getSurname();
 
-        return $name . ' ' . $surname;
+        return $name.' '.$surname;
     }
 
     /**
@@ -202,5 +211,33 @@ class Employee
         }
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password): string
+    {
+        return $this->password = $password;
+    }
+
+    public function getRoles(): array
+    {
+        // TODO: Implement getRoles() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        // TODO: Implement getUserIdentifier() method.
     }
 }
