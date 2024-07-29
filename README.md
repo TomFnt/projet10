@@ -30,7 +30,7 @@ git init
 
 Ensuite, Ajoutez le repo GitHub grâce à la commande suivante : 
 ```bash
-git remote add origin https://github.com/TomFnt/projet8-exo2.git
+git remote add origin https://github.com/TomFnt/projet10.git
 ````
 
 Enfin, il ne reste plus qu'à récupèrer les modifications du repoo distant directement sur votre branche main en local avec la commande suivante : 
