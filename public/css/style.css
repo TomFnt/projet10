@@ -12,11 +12,13 @@
 
 /* custom CSS for success message return by the Controller */
 .flash-success {
+    width: auto;
     background-color: #dff0d8;
     color: #3c763d;
     border: 1px solid #d6e9c6;
     padding: 10px;
     margin-bottom: 10px;
+    display: flex;
 }
 
 /* custom CSS for error message return by the Controller */
@@ -27,6 +29,34 @@
     padding: 10px;
     margin-bottom: 10px;
 }
+
+/*custom CSS for inscription form*/
+.login-formbox {
+    max-width: 40%;
+    margin-top: 2%;
+    padding: 20px;
+    background-color: #4c7f77;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+.login-formbox h2 {
+    color: #FFFFFF;
+}
+.login-formbox, label.required {
+    color: #FFFFFF;
+}
+.block-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 html, body {
     margin: 0;

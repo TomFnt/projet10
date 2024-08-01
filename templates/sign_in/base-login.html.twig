@@ -3,12 +3,15 @@
 {% block title %}{{ parent() }}-{{page_title}}{% endblock %}
 
 {% block body %}
-    <div id="content">
+    <div class="block-center">
+        <div class="login-formbox" id="content">
+            <h2>S'inscrire</h2>
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
 
-        {{ form_start(form) }}
-        {{ form_rest(form) }}
-
-        <button type="submit" class="button button-submit">{{ btn_label }}</button>
-        {{ form_end(form) }}
+            <button type="submit" class="button button-submit">{{ btn_label }}</button>
+            {{ form_end(form) }}
+        </div>
     </div>
+
 {% endblock %}
