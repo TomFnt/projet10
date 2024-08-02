@@ -49,6 +49,10 @@
 .login-formbox label {
     color: #FFFFFF !important;
 }
+.link-white{
+    color:#FFFFFF !important;
+}
+
 
 .block-center{
     display: flex;
