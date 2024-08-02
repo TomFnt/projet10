@@ -43,14 +43,13 @@
     align-content: center;
     flex-direction: column;
     align-items: center;
+    color: #FFFFFF !important;
 
 }
-.login-formbox h2 {
-    color: #FFFFFF;
+.login-formbox label {
+    color: #FFFFFF !important;
 }
-.login-formbox, label.required {
-    color: #FFFFFF;
-}
+
 .block-center{
     display: flex;
     justify-content: center;
