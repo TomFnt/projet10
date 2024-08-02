@@ -53,6 +53,9 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private $password;
 
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
     #[ORM\Column(length: 10)]
     #[Assert\Choice(choices: Employee::statutEmployeeList)]
     private $status;
@@ -230,9 +233,12 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
-    }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
+        return array_unique($roles);
+    }
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
@@ -240,6 +246,6 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        // TODO: Implement getUserIdentifier() method.
+        return $this->getEmail();
     }
 }
