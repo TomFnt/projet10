@@ -16,8 +16,16 @@ class AuthController extends AbstractController
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
+
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function index():Response
+    {
+        return $this->render('auth/base-login.html.twig', [
+            'page_title' => 'Login'
+        ]);
+    }
+    #[Route(path: '/signin', name: 'app_sign_in')]
+    public function signin(AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -25,7 +33,7 @@ class AuthController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('auth/login.html.twig', [
+        return $this->render('auth/base-login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
             'page_title' => 'Sign in',
