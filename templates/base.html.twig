@@ -18,6 +18,7 @@
 <body>
 
 <div id="main-container">
+   {% if display_nav == true %}
     <nav>
         <a href="{{ path('app_home') }}" id="logo">
             <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker">
@@ -35,6 +36,16 @@
             </li>
         </ul>
     </nav>
+   {% endif%}
+
+    {% if display_nav == false %}
+        <nav>
+            <a href="{{ path('app_home') }}" id="logo">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker">
+            </a>
+        </nav>
+    {% endif %}
+
     <main>
         <header>
             <div id="current-user"></div>
@@ -52,5 +63,7 @@
 {% endfor %}
 
     {% block body %}{% endblock %}
+    </main>
+</div>
 </body>
 </html>

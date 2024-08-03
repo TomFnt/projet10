@@ -17,6 +17,7 @@ class HomeController extends AbstractController
         return $this->render('home.html.twig', [
             'projects' => $projects,
             'page_title' => 'Projets',
+            'display_nav'=> true
         ]);
     }
 }

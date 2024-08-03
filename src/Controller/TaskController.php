@@ -46,6 +46,7 @@ class TaskController extends AbstractController
         return $this->render('task/task-form-add.html.twig', [
             'form' => $form,
             'page_title' => 'Créer une tâche',
+            'display_nav'=> true
         ]);
     }
 

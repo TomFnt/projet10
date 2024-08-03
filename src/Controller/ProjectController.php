@@ -60,6 +60,7 @@ class ProjectController extends AbstractController
             'todo_list' => $toDoList,
             'doing_list' => $DoingList,
             'done_list' => $doneList,
+            'display_nav'=> true
         ]);
     }
 
@@ -88,6 +89,7 @@ class ProjectController extends AbstractController
             'form' => $form->createView(),
             'page_title' => 'Modifier le Projet : '.$project->getName(),
             'btn_label' => 'Modifier',
+            'display_nav'=> true
         ]);
     }
 

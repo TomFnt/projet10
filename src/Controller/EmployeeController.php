@@ -25,6 +25,7 @@ class EmployeeController extends AbstractController
         return $this->render('employee/index.html.twig', [
             'employees' => $employees,
             'page_title' => 'Équipe',
+            'display_nav'=> true
         ]);
     }
 
@@ -54,6 +55,7 @@ class EmployeeController extends AbstractController
             'form' => $form->createView(),
             'page_title' => 'Modifier le Projet : '.$employee->getFullName(),
             'btn_label' => 'Modifier',
+            'display_nav'=> true
         ]);
     }
 
