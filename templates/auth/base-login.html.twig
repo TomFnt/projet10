@@ -19,7 +19,7 @@
                 {{ form_start(form) }}
                 {{ form_rest(form) }}
                 <button type="submit" class="button button-submit">{{ btn_label }}</button>
-                <a class="link-white" href="{{ path('app_sign_up') }}">
+                <a class="link-white" href="{{ path('app_sign_in') }}">
                     <p>Vous avez déjà un compte ?</p>
                 </a>
                 {{ form_end(form) }}
@@ -63,7 +63,7 @@
                     </button>
                 </form>
                 <p> Pas de compte ?
-                    <a class="link-white" href="{{ path('app_sign_in') }}"> S'inscrire</a>
+                    <a class="link-white" href="{{ path('app_sign_up') }}"> S'inscrire</a>
                 </p>
             {% endif %}
         </div>
