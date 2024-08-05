@@ -16,7 +16,7 @@ security:
             lazy: true
             provider: app_employee_provider
             form_login:
-                login_path: app_sign_in
+                login_path: app_login
                 check_path: app_sign_in
                 enable_csrf: true
             logout:
