@@ -18,13 +18,14 @@ class AuthController extends AbstractController
     }
 
     #[Route(path: '/login', name: 'app_login')]
-    public function index():Response
+    public function index(): Response
     {
         return $this->render('auth/base-login.html.twig', [
             'page_title' => 'Login',
-            'display_nav'=> false
+            'display_nav' => false,
         ]);
     }
+
     #[Route(path: '/signin', name: 'app_sign_in')]
     public function signin(AuthenticationUtils $authenticationUtils): Response
     {
@@ -38,9 +39,10 @@ class AuthController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             'page_title' => 'Sign in',
-            'display_nav'=> false
+            'display_nav' => false,
         ]);
     }
+
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
@@ -80,8 +82,8 @@ class AuthController extends AbstractController
         return $this->render('auth/base-login.html.twig', [
             'form' => $form->createView(),
             'page_title' => 'Sign up',
-            'btn_label'=>'Sign up',
-            'display_nav'=> false
+            'btn_label' => 'Sign up',
+            'display_nav' => false,
         ]);
     }
 }
