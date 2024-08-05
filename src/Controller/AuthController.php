@@ -59,7 +59,7 @@ class AuthController extends AbstractController
             try {
                 $employee = $form->getData();
                 $employee->setAvatar($employee->getName(), $employee->getSurname());
-                $employee->setStatus(1);
+                $employee->setStatus('CDI');
 
                 $hashPassword = $passwordHasher->hashPassword($employee, $employee->getPassword());
                 $employee->setPassword($hashPassword);
