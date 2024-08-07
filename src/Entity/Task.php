@@ -34,7 +34,6 @@ class Task
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Assert\DateTime]
     private ?\DateTimeInterface $deadline = null;
 
     #[ORM\Column(length: 255)]
