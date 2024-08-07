@@ -43,6 +43,7 @@ class ProjectController extends AbstractController
 
         return $this->render('project/project-form.html.twig', [
             'form' => $form,
+            'display_nav'=> 'true',
             'page_title' => 'Créer un projet',
             'btn_label' => 'Créer',
         ]);
