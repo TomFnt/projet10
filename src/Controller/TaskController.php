@@ -56,6 +56,10 @@ class TaskController extends AbstractController
     #[Route('/task/{id}', name: 'task_index', requirements: ['id' => '\d+'])]
     public function taskIndex(Task $task, Request $request): Response
     {
+        if(!$this->isGranted('ROLE_ADMIN') &&  !$task->getEmployees()->contains($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(TaskType::class, $task,  [
             'project_id' => $task->getProject()->getId(),
         ]);
@@ -81,6 +85,7 @@ class TaskController extends AbstractController
             'form' => $form->createView(),
             'page_title' => $task->getName(),
             'id_task' => $task->getId(),
+            'display_nav'=> true,
         ]);
     }
 
