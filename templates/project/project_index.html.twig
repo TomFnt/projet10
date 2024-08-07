@@ -11,7 +11,9 @@
                 {% endfor %}
             </div>
         {% endif %}
+        {% if 'ROLE_ADMIN' in app.user.roles %}
         <a class="button" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -34,7 +36,9 @@
                     </a>
                     {% endfor %}
                     {% endif %}
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
                     <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                {% endif %}
                 </div>
             </div>
             <div class="task-column">
@@ -53,7 +57,9 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="task-column">
@@ -72,7 +78,9 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% endif %}
                 </div>
             </div>
     </div>
