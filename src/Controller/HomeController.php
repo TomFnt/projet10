@@ -14,12 +14,22 @@ class HomeController extends AbstractController
     #[Route(name: 'app_home')]
     public function index(ProjectRepository $projectRepository): Response
     {
-        $projects = $projectRepository->findAll();
+        $employeeId = $this->getUser()->getId();
+        $role = $this->getUser()->getRoles();
+
+        if($role[0] == "ROLE_ADMIN"){
+            $projects = $projectRepository->findAll();
+        }
+        else
+        {
+         $projects = $projectRepository->findProjectsByEmployee($employeeId);
+        }
 
         return $this->render('home.html.twig', [
             'projects' => $projects,
             'page_title' => 'Projets',
-            'display_nav'=> true
+            'display_nav'=> true,
+            'test'=> $employeeId
         ]);
     }
 }
