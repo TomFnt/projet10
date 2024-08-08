@@ -20,7 +20,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('project/{id}/task/add', name: 'task_add', requirements: ['id' => '\d+'])]
-    #[IsGranted('ROLE_ADMIN', statusCode: 403, message:"Vous n'êtes pas autorisé à accéder à cette page.")]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function taskAdd(Project $project, Request $request): Response
     {
         $task = new Task();
@@ -90,7 +90,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/task/delete/{id}', name: 'task_delete', requirements: ['id_task' => '\d+'])]
-    #[IsGranted('ROLE_ADMIN', statusCode: 403, message:"Vous n'êtes pas autorisé à accéder à cette page.")]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function delete(Task $task): Response
     {
         $id = $task->getId();

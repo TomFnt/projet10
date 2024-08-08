@@ -20,7 +20,7 @@ class ExceptionListener
     {
         $exception = $event->getThrowable();
 
-        if ($exception instanceof HttpExceptionInterface && $exception->getStatusCode() === 403) {
+        if ($exception instanceof HttpExceptionInterface && 403 === $exception->getStatusCode()) {
             $response = new Response(
                 $this->twig->render('bundles/TwigBundle/Exception/error403.html.twig', [
                     'message' => $exception->getMessage(),
