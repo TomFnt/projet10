@@ -68,6 +68,17 @@
     margin-left: 60%;
 }
 
+/*Custom class for bg of login & 2fa page*/
+body.logout-page {
+    background: url("/img/bg-logout.png") center center no-repeat;
+    background-size: cover;
+}
+/*Custom CSS */
+header.logout-header {
+    background: transparent;
+    height: 155px;
+    padding: 30px 80px 10px 80px;
+}
 
 .block-center{
     display: flex;

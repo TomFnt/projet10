@@ -1,7 +1,8 @@
-{% extends './base.html.twig' %}
+{% extends 'auth/base-auth.html.twig' %}
 
 {% block body %}
-
+    <div class="block-center">
+    <div class="login-formbox" id="content">
     <h1>Confirmez votre connexion</h1>
     <form action="{{ path('2fa_login_check') }}" method="POST">
         <p>Scannez le QR Code avec l'application Google Auth et entrez le code :</p>
@@ -12,4 +13,6 @@
         </div>
         <button class="button button-submit">Se connecter</button>
     </form>
+    </div>
+    </div>
 {% endblock %}
