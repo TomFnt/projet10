@@ -26,7 +26,7 @@ class AuthController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function index(): Response
     {
-        return $this->render('auth/base-login.html.twig', [
+        return $this->render('auth/login.html.twig', [
             'page_title' => 'Login',
             'display_nav' => false,
         ]);
@@ -41,7 +41,7 @@ class AuthController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('auth/base-login.html.twig', [
+        return $this->render('auth/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
             'page_title' => 'Sign in',
@@ -86,7 +86,7 @@ class AuthController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('auth/base-login.html.twig', [
+        return $this->render('auth/login.html.twig', [
             'form' => $form->createView(),
             'page_title' => 'Sign up',
             'btn_label' => 'Sign up',
