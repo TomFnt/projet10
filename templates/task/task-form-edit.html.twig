@@ -7,7 +7,7 @@
         <div class="account-header">
             <div class="avatar">{{ app.user.avatar }}</div>
             <p> {{ app.user.name }} {{ app.user.surname }}</p>
-            <a class="button" href="">Déconnexion</a>
+            <a class="button" href="{{ path('app_logout')}}">Déconnexion</a>
         </div>
     </div>
 {% endblock %}
