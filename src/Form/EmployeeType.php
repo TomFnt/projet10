@@ -18,7 +18,7 @@ class EmployeeType extends AbstractType
             ->add('name')
             ->add('surname')
             ->add('email')
-        >add('password', PasswordType::class, [
+        > add('password', PasswordType::class, [
             'label' => 'Mot de passe',
         ])
             ->add('status', ChoiceType::class, [

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted("ROLE_USER")]
+#[IsGranted('ROLE_USER')]
 class HomeController extends AbstractController
 {
     #[Route(name: 'app_home')]
@@ -17,19 +17,17 @@ class HomeController extends AbstractController
         $employeeId = $this->getUser()->getId();
         $role = $this->getUser()->getRoles();
 
-        if($role[0] == "ROLE_ADMIN"){
+        if ('ROLE_ADMIN' == $role[0]) {
             $projects = $projectRepository->findAll();
-        }
-        else
-        {
-         $projects = $projectRepository->findProjectsByEmployee($employeeId);
+        } else {
+            $projects = $projectRepository->findProjectsByEmployee($employeeId);
         }
 
         return $this->render('home.html.twig', [
             'projects' => $projects,
             'page_title' => 'Projets',
-            'display_nav'=> true,
-            'test'=> $employeeId
+            'display_nav' => true,
+            'test' => $employeeId,
         ]);
     }
 }

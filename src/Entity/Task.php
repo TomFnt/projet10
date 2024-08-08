@@ -22,14 +22,14 @@ class Task
     #[ORM\Column(length: 255)]
     #[Assert\Length(
         max: 255,
-        maxMessage: "Le nom de la tâche ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: 'Le nom de la tâche ne peut pas dépasser {{ limit }} caractères'
     )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(
         max: 255,
-        maxMessage: "la description ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: 'la description ne peut pas dépasser {{ limit }} caractères'
     )]
     private ?string $description = null;
 

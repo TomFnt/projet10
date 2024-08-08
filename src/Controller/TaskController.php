@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted("ROLE_USER")]
+#[IsGranted('ROLE_USER')]
 class TaskController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $entityManager)
@@ -20,7 +20,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('project/{id}/task/add', name: 'task_add', requirements: ['id' => '\d+'])]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted('ROLE_ADMIN')]
     public function taskAdd(Project $project, Request $request): Response
     {
         $task = new Task();
@@ -49,18 +49,18 @@ class TaskController extends AbstractController
         return $this->render('task/task-form-add.html.twig', [
             'form' => $form,
             'page_title' => 'Créer une tâche',
-            'display_nav'=> true
+            'display_nav' => true,
         ]);
     }
 
     #[Route('/task/{id}', name: 'task_index', requirements: ['id' => '\d+'])]
     public function taskIndex(Task $task, Request $request): Response
     {
-        if(!$this->isGranted('ROLE_ADMIN') &&  !$task->getEmployees()->contains($this->getUser())) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$task->getEmployees()->contains($this->getUser())) {
             throw $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(TaskType::class, $task,  [
+        $form = $this->createForm(TaskType::class, $task, [
             'project_id' => $task->getProject()->getId(),
         ]);
         $form->handleRequest($request);
@@ -85,12 +85,12 @@ class TaskController extends AbstractController
             'form' => $form->createView(),
             'page_title' => $task->getName(),
             'id_task' => $task->getId(),
-            'display_nav'=> true,
+            'display_nav' => true,
         ]);
     }
 
     #[Route('/task/delete/{id}', name: 'task_delete', requirements: ['id_task' => '\d+'])]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Task $task): Response
     {
         $id = $task->getId();
