@@ -53,6 +53,12 @@
     color:#FFFFFF !important;
 }
 
+/*Custom class for 2FA qr code*/
+.qrcode {
+    display: block;
+    margin: 25px auto;
+}
+
 
 .block-center{
     display: flex;

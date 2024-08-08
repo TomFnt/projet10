@@ -4,6 +4,12 @@ namespace App\Controller;
 
 use App\Form\SignUpType;
 use Doctrine\ORM\EntityManagerInterface;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\Writer\PngWriter;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +56,7 @@ class AuthController extends AbstractController
     }
 
     #[Route('/signup', name: 'app_sign_up')]
-    public function signup(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function signup(Request $request, UserPasswordHasherInterface $passwordHasher, GoogleAuthenticatorInterface $googleAuth): Response
     {
         $form = $this->createForm(SignUpType::class);
 
@@ -65,6 +71,7 @@ class AuthController extends AbstractController
 
                 $hashPassword = $passwordHasher->hashPassword($employee, $employee->getPassword());
                 $employee->setPassword($hashPassword);
+                $employee->setGoogleAuthenticatorSecret($googleAuth->generateSecret());
 
                 $date = new \DateTime();
                 $employee->setDateAdd($date);
@@ -83,6 +90,33 @@ class AuthController extends AbstractController
             'form' => $form->createView(),
             'page_title' => 'Sign up',
             'btn_label' => 'Sign up',
+            'display_nav' => false,
+        ]);
+    }
+
+    #[Route('/2fa/qrcode', name: '2fa_qrcode')]
+    public function displayGoogleAuthenticatorQrCode(GoogleAuthenticatorInterface $googleAuthenticator): Response
+    {
+        $result = Builder::create()
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($googleAuthenticator->getQRContent($this->getUser()))
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(ErrorCorrectionLevel::High)
+            ->size(200)
+            ->margin(0)
+            ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
+            ->build();
+
+        return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
+    }
+
+    #[Route('/2fa', name: '2fa_login')]
+    public function displayGoogleAuthenticator(): Response
+    {
+        return $this->render('auth/2fa.html.twig', [
+            'qrCode' => $this->generateUrl('2fa_qrcode'),
+            'page_title' => 'double authentication',
             'display_nav' => false,
         ]);
     }
