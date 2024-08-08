@@ -30,6 +30,14 @@
     margin-bottom: 10px;
 }
 
+a.button.error{
+background-color:  #a94442;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
+
 /*custom CSS for inscription form*/
 .login-formbox {
     max-width: 40%;

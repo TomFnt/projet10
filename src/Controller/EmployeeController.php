@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_ADMIN')]
+#[IsGranted('ROLE_ADMIN', statusCode: 403, message:"Vous n'êtes pas autorisé à accéder à cette page.")]
 class EmployeeController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $entityManager)
@@ -22,6 +22,7 @@ class EmployeeController extends AbstractController
     #[Route('/employees', name: 'employees_index')]
     public function index(EmployeeRepository $employeeRepository): Response
     {
+
         $employees = $employeeRepository->findAll();
 
         return $this->render('employee/index.html.twig', [

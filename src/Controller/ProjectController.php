@@ -20,7 +20,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/add', name: 'project_add')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message:"Vous n'êtes pas autorisé à accéder à cette page.")]
     public function projectAdd(Request $request): Response
     {
         $project = new Project();
@@ -68,7 +68,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/edit/{id}', name: 'project_edit', requirements: ['id' => '\d+'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message:"Vous n'êtes pas autorisé à accéder à cette page.")]
     public function projectEdit(Project $project, Request $request): Response
     {
         $form = $this->createForm(ProjectType::class, $project);
@@ -98,7 +98,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/delete/{id}', name: 'project_delete', requirements: ['id' => '\d+'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message:"Vous n'êtes pas autorisé à accéder à cette page.")]
     public function projectDelete(Project $project): Response
     {
         $id = $project->getId();
