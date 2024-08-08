@@ -59,6 +59,15 @@
     margin: 25px auto;
 }
 
+/*Custom class for account header */
+.account-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    color: #FFFFFF;
+    margin-left: 60%;
+}
+
 
 .block-center{
     display: flex;

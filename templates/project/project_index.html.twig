@@ -14,6 +14,12 @@
         {% if 'ROLE_ADMIN' in app.user.roles %}
         <a class="button" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
         {% endif %}
+
+        <div class="account-header">
+            <div class="avatar">{{ app.user.avatar }}</div>
+            <p> {{ app.user.name }} {{ app.user.surname }}</p>
+            <a class="button" href="">Déconnexion</a>
+        </div>
     </div>
 {% endblock %}
 
