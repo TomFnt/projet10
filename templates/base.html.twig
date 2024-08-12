@@ -29,7 +29,7 @@
                     <i class="fa-solid fa-list-check"></i> Projets
                 </a>
             </li>
-            {% if 'ROLE_ADMIN' in app.user.roles %}
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="{{ app.request.attributes.get('_route') == 'employees_index' ? 'active' : '' }}">
                 <a href="{{ path('employees_index') }}">
                     <i class="fa-regular fa-user"></i> Équipe

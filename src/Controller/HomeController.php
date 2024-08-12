@@ -17,7 +17,7 @@ class HomeController extends AbstractController
         $employeeId = $this->getUser()->getId();
         $role = $this->getUser()->getRoles();
 
-        if ('ROLE_ADMIN' == $role[0]) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $projects = $projectRepository->findAll();
         } else {
             $projects = $projectRepository->findProjectsByEmployee($employeeId);

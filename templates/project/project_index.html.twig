@@ -11,7 +11,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        {% if 'ROLE_ADMIN' in app.user.roles %}
+        {% if is_granted('ROLE_ADMIN') %}
         <a class="button" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
         {% endif %}
 
@@ -42,7 +42,7 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
                 {% endif %}
                 </div>
@@ -63,7 +63,7 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
                     {% endif %}
                 </div>
@@ -84,7 +84,7 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    {% if 'ROLE_ADMIN' in app.user.roles %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
                     {% endif %}
                 </div>
