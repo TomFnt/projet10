@@ -51,7 +51,8 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}', name: 'project_index', requirements: ['id' => '\d+'])]
-    public function projectIndex(Project $project, TaskRepository $taskRepository): Response
+    #[IsGranted('project_access', 'id')]
+    public function projectIndex(Project $project, TaskRepository $taskRepository, int $id): Response
     {
         $toDoList = $taskRepository->findBy(['project' => $project, 'status' => 'To Do'], ['deadline' => 'ASC']);
         $DoingList = $taskRepository->findBy(['project' => $project, 'status' => 'Doing'], ['deadline' => 'ASC']);

@@ -7,6 +7,7 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -54,9 +55,10 @@ class TaskController extends AbstractController
     }
 
     #[Route('/task/{id}', name: 'task_index', requirements: ['id' => '\d+'])]
-    public function taskIndex(Task $task, Request $request): Response
+    public function taskIndex(Task $task, Request $request, Security $security, int $id ): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !$task->getEmployees()->contains($this->getUser())) {
+
+        if (!$this->isGranted('ROLE_ADMIN') && !$security->isGranted('task_access', $id)) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette page.");
         }
 
