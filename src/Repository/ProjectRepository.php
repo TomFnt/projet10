@@ -22,7 +22,7 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
-    public function findProjectsByEmployee(Employee $employee) : array
+    public function findProjectsByEmployee(Employee $employee): array
     {
         $qb = $this->createQueryBuilder('p')
             ->innerJoin('p.employees', 'e')

@@ -55,9 +55,8 @@ class TaskController extends AbstractController
     }
 
     #[Route('/task/{id}', name: 'task_index', requirements: ['id' => '\d+'])]
-    public function taskIndex(Task $task, Request $request, Security $security, int $id ): Response
+    public function taskIndex(Task $task, Request $request, Security $security, int $id): Response
     {
-
         if (!$this->isGranted('ROLE_ADMIN') && !$security->isGranted('task_access', $id)) {
             throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette page.");
         }

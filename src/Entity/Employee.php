@@ -273,6 +273,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Two
     {
         $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
+
     public function isAdmin(): bool
     {
         return in_array('ROLE_ADMIN', $this->roles);
