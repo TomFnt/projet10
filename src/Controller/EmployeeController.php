@@ -47,7 +47,7 @@ class EmployeeController extends AbstractController
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
             } catch (\Exception $message) {
-                $this->addFlash('error', "Une erreur c'est produite lors de la modification de ce projet.".$message);
+                $this->addFlash('error', "Une erreur c'est produite lors de la modification de cet employé.".$message);
             }
 
             return $this->redirectToRoute('employees_index');
@@ -55,7 +55,7 @@ class EmployeeController extends AbstractController
 
         return $this->render('employee/employee-form.html.twig', [
             'form' => $form->createView(),
-            'page_title' => 'Modifier le Projet : '.$employee->getFullName(),
+            'page_title' => 'Modifier l\'employé : '.$employee->getFullName(),
             'btn_label' => 'Modifier',
             'display_nav' => true,
         ]);

@@ -243,6 +243,11 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Two
         return array_unique($roles);
     }
 
+    public function setRoles(array $roles): array
+    {
+        return $this->roles = array_values($roles);
+    }
+
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
