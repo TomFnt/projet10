@@ -65,7 +65,6 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Two
     private $status;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\DateTime]
     private ?\DateTimeInterface $date_add = null;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'employees')]
@@ -242,6 +241,11 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Two
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): array
+    {
+        return $this->roles = array_values($roles);
     }
 
     public function eraseCredentials()
