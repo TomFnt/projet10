@@ -65,7 +65,6 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Two
     private $status;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\DateTime]
     private ?\DateTimeInterface $date_add = null;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'employees')]
