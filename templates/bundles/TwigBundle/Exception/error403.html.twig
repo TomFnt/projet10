@@ -1,0 +1,13 @@
+{% extends "auth/base-auth.html.twig" %}
+
+{% block title %}Erreur 403 - Accès interdit{% endblock %}
+
+{% block body %}
+    <div class="block-center">
+    <div class="flash-error" id="content">
+    <h1>Accès interdit</h1>
+    <p>{{ exception.message }}</p>
+    <a href="{{ path('app_home') }} " class="button error">Retour à l'accueil</a>
+    </div>
+    </div>
+{% endblock %}

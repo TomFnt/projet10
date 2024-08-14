@@ -18,6 +18,7 @@
 <body>
 
 <div id="main-container">
+   {% if display_nav == true %}
     <nav>
         <a href="{{ path('app_home') }}" id="logo">
             <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker">
@@ -28,13 +29,25 @@
                     <i class="fa-solid fa-list-check"></i> Projets
                 </a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="{{ app.request.attributes.get('_route') == 'employees_index' ? 'active' : '' }}">
                 <a href="{{ path('employees_index') }}">
                     <i class="fa-regular fa-user"></i> Équipe
                 </a>
             </li>
+            {% endif %}
         </ul>
     </nav>
+   {% endif%}
+
+    {% if display_nav == false %}
+        <nav>
+            <a href="{{ path('app_home') }}" id="logo">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo TaskLinker">
+            </a>
+        </nav>
+    {% endif %}
+
     <main>
         <header>
             <div id="current-user"></div>
@@ -52,5 +65,7 @@
 {% endfor %}
 
     {% block body %}{% endblock %}
+    </main>
+</div>
 </body>
 </html>

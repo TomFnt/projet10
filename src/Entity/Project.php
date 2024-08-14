@@ -18,7 +18,7 @@ class Project
     #[ORM\Column(length: 255)]
     #[Assert\Length(
         max: 255,
-        maxMessage: "Le nom du projet ne peut pas dépasser {{ limit }} caractères"
+        maxMessage: 'Le nom du projet ne peut pas dépasser {{ limit }} caractères'
     )]
     private ?string $name = null;
 

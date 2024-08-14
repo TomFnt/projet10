@@ -1,13 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }}-{{page_title}}{% endblock %}
+{% block nav %}
+    <div class="flex-header">
+        {{ parent() }}
+        <div class="account-header">
+            <div class="avatar">{{ app.user.avatar }}</div>
+            <p> {{ app.user.name }} {{ app.user.surname }}</p>
+            <a class="button" href="{{ path('app_logout')}}">Déconnexion</a>
+        </div>
+    </div>
+{% endblock %}
 {% block body %}
     <div id="content">
         {{ form_start(form) }}
         {{ form_rest(form) }}
 
         <button type="submit" class="button button-submit">Modifier</button>
-        <a href="{{ path('task_delete', {'id': id_task}) }}" class="delete-task">Supprimer la tâche</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('task_delete', {'id': id_task}) }}" class="delete-task">Supprimer la tâche</a>
+        {% endif %}
         {{ form_end(form) }}
     </div>
 {% endblock %}

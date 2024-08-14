@@ -1,6 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }}-{{page_title}}{% endblock %}
+{% block nav %}
+    <div class="flex-header">
+        {{ parent() }}
+        <div class="account-header">
+            <div class="avatar">{{ app.user.avatar }}</div>
+            <p> {{ app.user.name }} {{ app.user.surname }}</p>
+            <a class="button" href="{{ path('app_logout')}}">Déconnexion</a>
+        </div>
+    </div>
+{% endblock %}
 {% block body %}
     <div id="content">
     {{ form_start(form) }}

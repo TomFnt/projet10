@@ -4,14 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
-use App\Repository\EmployeeRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 class ProjectController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $entityManager)
@@ -19,6 +20,7 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/add', name: 'project_add')]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function projectAdd(Request $request): Response
     {
         $project = new Project();
@@ -32,7 +34,7 @@ class ProjectController extends AbstractController
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Votre nouveau projet a été enregistrées avec succès.');
             } catch (\Exception $message) {
-                $this->addFlash('error', "Une erreur c'est produite lors de la création de ce projet. ".$message);
+                $this->addFlash('error', "Une erreur c'est produite lors de la création de ce projet.".$message);
 
                 return $this->redirectToRoute('project_add');
             }
@@ -42,13 +44,15 @@ class ProjectController extends AbstractController
 
         return $this->render('project/project-form.html.twig', [
             'form' => $form,
+            'display_nav' => 'true',
             'page_title' => 'Créer un projet',
             'btn_label' => 'Créer',
         ]);
     }
 
     #[Route('/project/{id}', name: 'project_index', requirements: ['id' => '\d+'])]
-    public function projectIndex(Project $project, TaskRepository $taskRepository, EmployeeRepository $employeeRepository): Response
+    #[IsGranted('project_access', 'id')]
+    public function projectIndex(Project $project, TaskRepository $taskRepository, int $id): Response
     {
         $toDoList = $taskRepository->findBy(['project' => $project, 'status' => 'To Do'], ['deadline' => 'ASC']);
         $DoingList = $taskRepository->findBy(['project' => $project, 'status' => 'Doing'], ['deadline' => 'ASC']);
@@ -60,10 +64,12 @@ class ProjectController extends AbstractController
             'todo_list' => $toDoList,
             'doing_list' => $DoingList,
             'done_list' => $doneList,
+            'display_nav' => true,
         ]);
     }
 
     #[Route('/project/edit/{id}', name: 'project_edit', requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function projectEdit(Project $project, Request $request): Response
     {
         $form = $this->createForm(ProjectType::class, $project);
@@ -88,10 +94,12 @@ class ProjectController extends AbstractController
             'form' => $form->createView(),
             'page_title' => 'Modifier le Projet : '.$project->getName(),
             'btn_label' => 'Modifier',
+            'display_nav' => true,
         ]);
     }
 
     #[Route('/project/delete/{id}', name: 'project_delete', requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function projectDelete(Project $project): Response
     {
         $id = $project->getId();

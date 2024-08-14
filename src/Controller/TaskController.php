@@ -7,10 +7,13 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 class TaskController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $entityManager)
@@ -18,6 +21,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('project/{id}/task/add', name: 'task_add', requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function taskAdd(Project $project, Request $request): Response
     {
         $task = new Task();
@@ -46,13 +50,18 @@ class TaskController extends AbstractController
         return $this->render('task/task-form-add.html.twig', [
             'form' => $form,
             'page_title' => 'Créer une tâche',
+            'display_nav' => true,
         ]);
     }
 
     #[Route('/task/{id}', name: 'task_index', requirements: ['id' => '\d+'])]
-    public function taskIndex(Task $task, Request $request): Response
+    public function taskIndex(Task $task, Request $request, Security $security, int $id): Response
     {
-        $form = $this->createForm(TaskType::class, $task,  [
+        if (!$this->isGranted('ROLE_ADMIN') && !$security->isGranted('task_access', $id)) {
+            throw $this->createAccessDeniedException("Vous n'êtes pas autorisé à accéder à cette page.");
+        }
+
+        $form = $this->createForm(TaskType::class, $task, [
             'project_id' => $task->getProject()->getId(),
         ]);
         $form->handleRequest($request);
@@ -77,10 +86,12 @@ class TaskController extends AbstractController
             'form' => $form->createView(),
             'page_title' => $task->getName(),
             'id_task' => $task->getId(),
+            'display_nav' => true,
         ]);
     }
 
     #[Route('/task/delete/{id}', name: 'task_delete', requirements: ['id_task' => '\d+'])]
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, message: "Vous n'êtes pas autorisé à accéder à cette page.")]
     public function delete(Task $task): Response
     {
         $id = $task->getId();

@@ -1,27 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block titre %}{{ parent() }}-Liste des Projets{% endblock%}
+{% block nav %}
+    <div class="flex-header">
+        {{ parent() }}
+        <div class="account-header">
+            <div class="avatar">{{ app.user.avatar }}</div>
+            <p> {{ app.user.name }} {{ app.user.surname }}</p>
+            <a class="button" href="{{ path('app_logout')}}">Déconnexion</a>
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
 
             <div id="content">
                 <div id="projects-container">
+                    {% if projects is empty %}
+                        <p>Vous avez actuellement aucun projet qui vous est assigné</p>
+                    {% endif %}
+
+                    {% if projects is not empty %}
                     {% for project in projects %}
                         <article class="card-project">
                             <a href="{{ path('project_index', { 'id': project.id }) }}">
                                 <h2>{{ project.name }}</h2>
                             </a>
+                            {% if is_granted('ROLE_ADMIN') %}
                             <div class="card-project-icons">
                                 <a href="{{ path('project_edit', { 'id': project.id }) }}"><i class="fa-solid fa-pen"></i></a>
                                 <a href="#"><i class="fa-solid fa-trash"></i></a>
                             </div>
+                            {% endif %}
                         </article>
                     {% endfor %}
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                     <article class="card-project">
                         <a href="{{ path('project_add')}}">
                             <i class="fa-solid fa-circle-plus add-project-icon"></i>
                             <h2>Ajouter un projet</h2>
                         </a>
                     </article>
+                    {% endif %}
                 </div>
             </div>
         </main>

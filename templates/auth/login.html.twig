@@ -1,0 +1,72 @@
+{% extends 'auth/base-auth.html.twig' %}
+
+{% block title %}{{ parent() }}-{{page_title}}{% endblock %}
+
+{% block body %}
+    <div class="block-center">
+        <div class="login-formbox" id="content">
+            {% if page_title == "Login" %}
+            <h2>Bienvenue sur TaskLinker</h2>
+                <p> Commencer dès maintenant - gratuitement</p>
+                    <p>Vous avez déjà un compte ?</p>
+                    <a class=" button button-edit-team" href="{{ path('app_sign_in') }}">Se connecter</a>
+                    <p>--------------------- ou ---------------------</p>
+                    <a class="button" href="{{ path('app_sign_up') }}">S'inscrire</a>
+            {% endif %}
+
+            {% if page_title == "Sign up" %}
+                <h2>{{ page_title }}</h2>
+                {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <button type="submit" class="button button-submit">{{ btn_label }}</button>
+                <a class="link-white" href="{{ path('app_sign_in') }}">
+                    <p>Vous avez déjà un compte ?</p>
+                </a>
+                {{ form_end(form) }}
+            {% endif %}
+
+            {% if page_title == "Sign in" %}
+                <form action="{{ path('app_sign_in') }}" method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+                    <h1 class="h3 mb-3 font-weight-normal">{{ page_title }}</h1>
+                    <label for="username">Email</label>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                    <label for="password">Password</label>
+                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+
+                    {#
+                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                    See https://symfony.com/doc/current/security/remember_me.html
+
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Remember me
+                        </label>
+                    </div>
+                    #}
+
+                    <button class="button button-submit" type="submit">
+                        {{ page_title }}
+                    </button>
+                </form>
+                <p> Pas de compte ?
+                    <a class="link-white" href="{{ path('app_sign_up') }}"> S'inscrire</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

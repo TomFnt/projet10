@@ -11,7 +11,15 @@
                 {% endfor %}
             </div>
         {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
         <a class="button" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
+        {% endif %}
+
+        <div class="account-header">
+            <div class="avatar">{{ app.user.avatar }}</div>
+            <p> {{ app.user.name }} {{ app.user.surname }}</p>
+            <a class="button" href="{{ path('app_logout')}}">Déconnexion</a>
+        </div>
     </div>
 {% endblock %}
 
@@ -34,7 +42,9 @@
                     </a>
                     {% endfor %}
                     {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                {% endif %}
                 </div>
             </div>
             <div class="task-column">
@@ -53,7 +63,9 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="task-column">
@@ -72,7 +84,9 @@
                     </a>
                     {% endfor %}
                     {% endif %}
-                    <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('task_add', {'id': project.id}) }}" class="task-add">+ Ajouter une tâche</a>
+                    {% endif %}
                 </div>
             </div>
     </div>

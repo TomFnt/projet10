@@ -12,11 +12,13 @@
 
 /* custom CSS for success message return by the Controller */
 .flash-success {
+    width: auto;
     background-color: #dff0d8;
     color: #3c763d;
     border: 1px solid #d6e9c6;
     padding: 10px;
     margin-bottom: 10px;
+    display: flex;
 }
 
 /* custom CSS for error message return by the Controller */
@@ -27,6 +29,71 @@
     padding: 10px;
     margin-bottom: 10px;
 }
+
+a.button.error{
+background-color:  #a94442;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
+
+/*custom CSS for inscription form*/
+.login-formbox {
+    max-width: 40%;
+    margin-top: 2%;
+    padding: 20px;
+    background-color: #4c7f77;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: #FFFFFF !important;
+
+}
+.login-formbox label {
+    color: #FFFFFF !important;
+}
+.link-white{
+    color:#FFFFFF !important;
+}
+
+/*Custom class for 2FA qr code*/
+.qrcode {
+    display: block;
+    margin: 25px auto;
+}
+
+/*Custom class for account header */
+.account-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    color: #FFFFFF;
+    margin-left: 60%;
+}
+
+/*Custom class for bg of login & 2fa page*/
+body.logout-page {
+    background: url("/img/bg-logout.png") center center no-repeat;
+    background-size: cover;
+}
+/*Custom CSS */
+header.logout-header {
+    background: transparent;
+    height: 155px;
+    padding: 30px 80px 10px 80px;
+}
+
+.block-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 html, body {
     margin: 0;
